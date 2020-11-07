@@ -1,6 +1,6 @@
 # Web-App: Face Detection
-* The app is in construction (07 Nov 2020)
-* This is the final project for udemy coures: Web Developer
+* This app is still in construction (07 Nov 2020)
+* The app is the final project for udemy coures: Web Developer
 
 This is a face detection web application using MVP architecture with user registration and login/logout features.\
 Front-End implemented with HTML, CSS (Tachyons), JavaScript, React.\
