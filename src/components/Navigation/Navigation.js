@@ -8,7 +8,7 @@ function Navigation(props) {
         // JAX elements
         <nav style={{ display: 'flex', justifyContent: 'flex-end'}}>
             <p className='f3 link black dim underline pa3 pointer'>
-                Sign Out
+                {'Sign Out'}
             </p>
         </nav>
     )
