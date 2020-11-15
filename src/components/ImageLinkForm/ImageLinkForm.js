@@ -12,9 +12,9 @@ function ImageLinkForm(props) {
                 {'This AI tool will detect faces in your pictures.\n Enter a picture link to give it a try.'}
             </p>
             <div className='center'>
-                <div className='pa4 br3 shadow-5 form'>
+                <div className='form pa4 br3 shadow-5'>
                     <input className='f4 pa2 w-70' type='text'/>
-                    <button className='f4 w-30 grow link ph3 pv2 dib black bg-washed-yellow'>detect</button>
+                    <button className='f4 w-30 grow bn link ph3 pv2 dib black bg-washed-yellow'>detect</button>
                 </div>
             </div>
         </div>
