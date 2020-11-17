@@ -9,7 +9,7 @@ function ImageLinkForm(props) {
         // JAX elements
         <div>
             <p className='f3 preWrap'>
-                {'This AI tool will detect faces in your pictures.\n Enter a picture link to give it a try.'}
+                {'This AI tool will detect faces in your pictures. Enter a link to try:'}
             </p>
             <div className='center'>
                 <div className='form pa4 br3 shadow-5'>

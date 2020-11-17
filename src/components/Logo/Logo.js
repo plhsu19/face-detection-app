@@ -8,7 +8,7 @@ function Logo(props) {
         // in the JAX syntax, we actually pass a JS object as CSS style to the 
         // JAX elements
         <div className='logo'>
-                <img className="pa2 br2 w-20-l w-34-ns " src={logo} alt='logo'/>
+                <img className="pa2 br2" src={logo} alt='logo'/>
         </div>
     )
 }
