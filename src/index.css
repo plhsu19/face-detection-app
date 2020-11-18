@@ -1,7 +1,8 @@
 body {
   margin: 0;
   font-family: 'Courier New', Courier, monospace ;
-  background: linear-gradient(90deg, #ffafbd 0%, #6dd5ed 100%);
+  /* background: linear-gradient(90deg, #ffafbd 0%, #6dd5ed 100%); */
+  background-color: #e3dad1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
