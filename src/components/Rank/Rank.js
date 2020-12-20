@@ -7,10 +7,10 @@ function Rank(props) {
         // in the JAX syntax, we actually pass a JS object as CSS style to the 
         // JAX elements
         <div>
-            <div className='f2 white'>
+            <div className='f2 purple'>
                 {'Hi Pei, your current rank is'}
             </div>
-            <div className='f2 white'>
+            <div className='f2 purple'>
                 {'#1'}
             </div>
         </div>
