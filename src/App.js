@@ -3,6 +3,7 @@ import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import Detection from './components/Detection/Detection';
 import Rank from './components/Rank/Rank';
 import Particles from 'react-particles-js';
 import particleParameter from './particlePara';
@@ -23,6 +24,7 @@ class App extends Component {
     super();
     this.state = {
       input: '',
+      imageUrl: ''
     }
   }
 
@@ -30,15 +32,22 @@ class App extends Component {
   // argument: event => the event object that triggered by the user, i.e., changing the 
   // content of the input form (text)
   onInputChange = (event) => {
-    console.log(event.target.value);
+    this.setState({
+      input: event.target.value
+    })
   }
 
   // method for submit the image URL when 'submit button' is clicked
   onButtonSubmit = () => {
-    app.models.predict("d02b4508df58432fbb84e800597b8959", "https://www.tagvenue.com/blog/wp-content/uploads/2019/08/christmas-party-games-1024x682.jpg")
+    this.setState({
+      imageUrl: this.state.input
+    })
+    app.models.predict(
+      Clarifai.FACE_DETECT_MODEL,
+       this.state.input)
     .then(
       function(response) {
-        console.log(response)
+        console.log(response.outputs[0].data.regions[0].region_info.bounding_box)
       },
       function(error) {
         // do something if error returned
@@ -57,7 +66,7 @@ class App extends Component {
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit}
         />
-        {/* <FaceDetection /> */}
+        <Detection imageUrl={this.state.imageUrl} />
       </div>
     );
 

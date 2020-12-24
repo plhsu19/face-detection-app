@@ -3,7 +3,7 @@ import './ImageLinkForm.css'
 import 'tachyons';
 
 function ImageLinkForm(props) {
-    // deconstruct the parameter
+    // deconstruct the parameter object 'props' into individual variables
     const { onInputChange, onButtonSubmit } = props;
     return (
         // use in-line style css to add the style for "Sign Out"
@@ -11,7 +11,7 @@ function ImageLinkForm(props) {
         // JAX elements
         <div>
             <p className='f3 preWrap'>
-                {'This AI tool will detect faces in your pictures. Enter a link to try:'}
+                {'This AI tool detects faces in your pictures. Enter a link of .jpg to try:'}
             </p>
             <div className='center'>
                 <div className='form pa4 br3 shadow-5'>
