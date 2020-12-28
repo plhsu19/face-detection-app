@@ -24,7 +24,26 @@ class App extends Component {
     super();
     this.state = {
       input: '',
-      imageUrl: ''
+      imageUrl: '',
+      box: {},
+    }
+  }
+
+  // calculate the detected object location from the API's response
+  calculateObjectLocation = (data) => {
+    // bounding contains 4 numbers representing the percentage of the image
+    const objectLocation = data.outputs[0].data.regions[0].region_info.bounding_box;
+
+    // image DOM manupulation
+    const image = document.getElementById('inputImage');
+    const width = Number(image.width)
+    const height = Number(image.height)
+    console.log(width, height)
+    return {
+      leftCol: width * objectLocation.left_col, 
+      toprow: height * objectLocation.top_row,
+      rightCol: width - width * objectLocation.right_col,
+      bottomRow: height - height * objectLocation.bottom_row,
     }
   }
 
@@ -39,20 +58,18 @@ class App extends Component {
 
   // method for submit the image URL when 'submit button' is clicked
   onButtonSubmit = () => {
+    // setState() is an asynchronous process, which may not executed immediately
+    // use componentDidUpdate() to make sure the following processes fire after the setState is finished
     this.setState({
       imageUrl: this.state.input
     })
     app.models.predict(
       Clarifai.FACE_DETECT_MODEL,
        this.state.input)
-    .then(
-      function(response) {
-        console.log(response.outputs[0].data.regions[0].region_info.bounding_box)
-      },
-      function(error) {
-        // do something if error returned
-      }
-    )
+    .then((response) => {
+      console.log(this.calculateObjectLocation(response));
+      return this.calculateObjectLocation(response)})
+    .catch((err) => console.log(err))
   }
 
   render() {

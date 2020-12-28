@@ -9,7 +9,7 @@ function Detection({ imageUrl }) {
         <div className='center'>
             {/* set the top margin */}
             <div className='mt4 absolute'>
-                <img alt='sample' src={imageUrl} width='900px' height='auto' />
+                <img id='inputImage' alt='sample' src={imageUrl} width='900px' height='auto' />
             </div>
         </div>
     )
