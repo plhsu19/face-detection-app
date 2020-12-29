@@ -1,0 +1,12 @@
+.bounding-box {
+    position: absolute;
+    box-shadow: 0 0 0 5px #149df2 inset; 
+    /* parameters: offset-x | offset-y | blur-radius | spread-radius | color | inset(default=false) */
+
+    /* display style (flex-box), that could be avtived when needed: */
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: center; */
+
+    cursor: pointer;
+}

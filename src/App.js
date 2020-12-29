@@ -41,10 +41,15 @@ class App extends Component {
     console.log(width, height)
     return {
       leftCol: width * objectLocation.left_col, 
-      toprow: height * objectLocation.top_row,
+      topRow: height * objectLocation.top_row,
       rightCol: width - width * objectLocation.right_col,
       bottomRow: height - height * objectLocation.bottom_row,
     }
+  }
+
+  setBoundingBox = (box) => {
+    console.log(box);
+    this.setState({box: box});
   }
 
   // use arrow function to make sure the method point back to the App object
@@ -66,12 +71,10 @@ class App extends Component {
     app.models.predict(
       Clarifai.FACE_DETECT_MODEL,
        this.state.input)
-    .then((response) => {
-      console.log(this.calculateObjectLocation(response));
-      return this.calculateObjectLocation(response)})
+    .then((response) => this.setBoundingBox(this.calculateObjectLocation(response)))
     .catch((err) => console.log(err))
   }
-
+ 
   render() {
     return (
       <div className="App">
@@ -83,7 +86,7 @@ class App extends Component {
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit}
         />
-        <Detection imageUrl={this.state.imageUrl} />
+        <Detection box={this.state.box} imageUrl={this.state.imageUrl} />
       </div>
     );
 
