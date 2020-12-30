@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import Navigation from './components/Navigation/Navigation';
-import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Detection from './components/Detection/Detection';
-import Rank from './components/Rank/Rank';
 import Particles from 'react-particles-js';
 import particleParameter from './particlePara';
+import Navigation from './components/Navigation/Navigation';
+import Signin from './components/Signin/Signin';
+import Logo from './components/Logo/Logo';
+import Rank from './components/Rank/Rank';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import Detection from './components/Detection/Detection';
 import Clarifai from 'clarifai';
 
 // since we use create-react-app (with ES6 module system), 
@@ -80,6 +81,7 @@ class App extends Component {
       <div className="App">
         <Particles params={particleParameter} className='particle' />
         <Navigation />
+        <Signin />
         <Logo />
         <Rank />
         <ImageLinkForm
