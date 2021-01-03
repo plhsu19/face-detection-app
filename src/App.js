@@ -16,7 +16,7 @@ import Clarifai from 'clarifai';
 // initialize the client for image recognition API
 const app = new Clarifai.App({
   apiKey: 'dec2654d72a643e29103a7a33dd7eb4b'
- });
+});
 
 // smart component for the application
 class App extends Component {
@@ -27,6 +27,9 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: {},
+      // the route state keeps track of where we are on the page
+      // to control the status and display of the webapp.
+      route: 'signin'
     }
   }
 
@@ -41,7 +44,7 @@ class App extends Component {
     const height = Number(image.height)
     console.log(width, height)
     return {
-      leftCol: width * objectLocation.left_col, 
+      leftCol: width * objectLocation.left_col,
       topRow: height * objectLocation.top_row,
       rightCol: width - width * objectLocation.right_col,
       bottomRow: height - height * objectLocation.bottom_row,
@@ -50,7 +53,7 @@ class App extends Component {
 
   setBoundingBox = (box) => {
     console.log(box);
-    this.setState({box: box});
+    this.setState({ box: box });
   }
 
   // use arrow function to make sure the method point back to the App object
@@ -59,6 +62,13 @@ class App extends Component {
   onInputChange = (event) => {
     this.setState({
       input: event.target.value
+    })
+  }
+
+  // function for route change: signin <-> main page
+  onRouteChange = (nextRoute) => {
+    this.setState({
+      route: nextRoute
     })
   }
 
@@ -71,24 +81,28 @@ class App extends Component {
     })
     app.models.predict(
       Clarifai.FACE_DETECT_MODEL,
-       this.state.input)
-    .then((response) => this.setBoundingBox(this.calculateObjectLocation(response)))
-    .catch((err) => console.log(err))
+      this.state.input)
+      .then((response) => this.setBoundingBox(this.calculateObjectLocation(response)))
+      .catch((err) => console.log(err))
   }
- 
+
   render() {
     return (
       <div className="App">
         <Particles params={particleParameter} className='particle' />
-        <Navigation />
-        <Signin />
-        <Logo />
-        <Rank />
-        <ImageLinkForm
-          onInputChange={this.onInputChange}
-          onButtonSubmit={this.onButtonSubmit}
-        />
-        <Detection box={this.state.box} imageUrl={this.state.imageUrl} />
+        <Navigation onRouteChange={this.onRouteChange}/>
+        { this.state.route === 'signin'
+          ? <Signin onRouteChange={this.onRouteChange}/>
+          : <div>
+            <Logo />
+            <Rank />
+            <ImageLinkForm
+              onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit}
+            />
+            <Detection box={this.state.box} imageUrl={this.state.imageUrl} />
+          </div>
+        }
       </div>
     );
 
