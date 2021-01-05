@@ -4,6 +4,7 @@ import Particles from 'react-particles-js';
 import particleParameter from './particlePara';
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
+import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
@@ -65,7 +66,7 @@ class App extends Component {
     })
   }
 
-  // function for route change: signin <-> main page
+  // function for route(state) change: signin <-> main page
   onRouteChange = (nextRoute) => {
     this.setState({
       route: nextRoute
@@ -90,18 +91,22 @@ class App extends Component {
     return (
       <div className="App">
         <Particles params={particleParameter} className='particle' />
-        <Navigation onRouteChange={this.onRouteChange}/>
-        { this.state.route === 'signin'
-          ? <Signin onRouteChange={this.onRouteChange}/>
-          : <div>
-            <Logo />
-            <Rank />
-            <ImageLinkForm
-              onInputChange={this.onInputChange}
-              onButtonSubmit={this.onButtonSubmit}
-            />
-            <Detection box={this.state.box} imageUrl={this.state.imageUrl} />
-          </div>
+        <Navigation onRouteChange={this.onRouteChange} route={this.state.route} />
+        {
+          this.state.route === 'home'
+            ? <div>
+              <Logo />
+              <Rank />
+              <ImageLinkForm
+                onInputChange={this.onInputChange}
+                onButtonSubmit={this.onButtonSubmit}
+              />
+              <Detection box={this.state.box} imageUrl={this.state.imageUrl} />
+            </div>
+            : (this.state.route === 'signin'
+              ? <Signin onRouteChange={this.onRouteChange} />
+              : <Register onRouteChange={this.onRouteChange} />
+            )
         }
       </div>
     );
