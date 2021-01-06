@@ -10,7 +10,7 @@ function Rank(props) {
             <div className='f2'>
                 {'Hi Pei, your current rank is'}
             </div>
-            <div className='f2'>
+            <div className='f2 '>
                 {'#1'}
             </div>
         </div>

@@ -43,7 +43,6 @@ class App extends Component {
     const image = document.getElementById('inputImage');
     const width = Number(image.width)
     const height = Number(image.height)
-    console.log(width, height)
     return {
       leftCol: width * objectLocation.left_col,
       topRow: height * objectLocation.top_row,
@@ -53,7 +52,6 @@ class App extends Component {
   }
 
   setBoundingBox = (box) => {
-    console.log(box);
     this.setState({ box: box });
   }
 
@@ -88,12 +86,13 @@ class App extends Component {
   }
 
   render() {
+    const {route, box, imageUrl} = this.state;
     return (
       <div className="App">
         <Particles params={particleParameter} className='particle' />
-        <Navigation onRouteChange={this.onRouteChange} route={this.state.route} />
+        <Navigation onRouteChange={this.onRouteChange} route={route} />
         {
-          this.state.route === 'home'
+          route === 'home'
             ? <div>
               <Logo />
               <Rank />
@@ -101,9 +100,9 @@ class App extends Component {
                 onInputChange={this.onInputChange}
                 onButtonSubmit={this.onButtonSubmit}
               />
-              <Detection box={this.state.box} imageUrl={this.state.imageUrl} />
+              <Detection box={box} imageUrl={imageUrl} />
             </div>
-            : (this.state.route === 'signin'
+            : (route === 'signin'
               ? <Signin onRouteChange={this.onRouteChange} />
               : <Register onRouteChange={this.onRouteChange} />
             )
