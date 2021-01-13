@@ -1,3 +1,5 @@
+// React is only a variable name we use to import the module 'react'
+// it could be any name, e.g., import r from 'react'
 import React, { Component } from 'react';
 import './App.css';
 import Particles from 'react-particles-js';
