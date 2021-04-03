@@ -32,7 +32,14 @@ class App extends Component {
       box: {},
       // the route state keeps track of where we are on the page
       // to control the status and display of the webapp.
-      route: 'signin'
+      route: 'signin',
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     }
   }
 
@@ -55,6 +62,15 @@ class App extends Component {
 
   setBoundingBox = (box) => {
     this.setState({ box: box });
+  }
+
+  // load the user profile sent by server after register success into the App
+  loadUser = (data) => {
+    this.setState(
+      {
+        user: data
+      }
+    )
   }
 
   // use arrow function to make sure the method point back to the App object
@@ -106,7 +122,9 @@ class App extends Component {
             </div>
             : (route === 'signin'
               ? <Signin onRouteChange={this.onRouteChange} />
-              : <Register onRouteChange={this.onRouteChange} />
+              : <Register 
+              loadUser={this.loadUser}
+              onRouteChange={this.onRouteChange} />
             )
         }
       </div>

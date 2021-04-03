@@ -29,7 +29,7 @@ class Signin extends React.Component {
 
     // method when click on the submit of signin information:
     // 1. send the signin information as request to server
-    // 2. change the App's route or display "signin fail" message upon receiving the response
+    // 2. change the App's route/state upon receiving the response with 'success' 
     onSubmit = (event) => {
         // fetch return a promise resolved by the response (Response object)
         fetch('http://localhost:3000/signin/', {
@@ -79,7 +79,8 @@ class Signin extends React.Component {
                                 type="submit" value="Sign in" onClick={this.onSubmit} />
                         </div>
                         <div className="lh-copy mt3">
-                            <p onClick={() => onRouteChange('register')} className="f5 link dim black db pointer">Register</p>
+                            <p onClick={ () => onRouteChange('register')} 
+                            className="f5 link dim black db pointer">Register</p>
                         </div>
                     </div>
                 </main>
