@@ -30,7 +30,7 @@ class Signin extends React.Component {
     // method when click on the submit of signin information:
     // 1. send the signin information as request to server
     // 2. change the App's route/state upon receiving the response with 'success' 
-    onSubmit = (event) => {
+    onSubmitSignIn = (event) => {
         // fetch return a promise resolved by the response (Response object)
         fetch('http://localhost:3000/signin/', {
             method: 'POST',
@@ -44,8 +44,9 @@ class Signin extends React.Component {
         })
         .then(response => response.json())
         .then(
-            data => {
-                if (data === 'success') {
+            user => {
+                if (user.id) { // check if user.id exist. whether the server responded with a user profile?
+                    this.props.loadUser(user)
                     this.props.onRouteChange('home');
                 }
             })
@@ -76,7 +77,7 @@ class Signin extends React.Component {
                         </fieldset>
                         <div className="">
                             <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f5 dib"
-                                type="submit" value="Sign in" onClick={this.onSubmit} />
+                                type="submit" value="Sign in" onClick={this.onSubmitSignIn} />
                         </div>
                         <div className="lh-copy mt3">
                             <p onClick={ () => onRouteChange('register')} 

@@ -37,7 +37,7 @@ class Register extends React.Component {
     // 1. send the register information as a POST request to server
     // 2. change the App's route/state upon receiving the response with the user profile (in JSON)
     // TODO: dispaly "signin fail" if receive "fail" from server
-    onSubmit = (event) => {
+    onSubmitRegister = (event) => {
         // fetch return a promise resolved by the response (Response object)
         fetch('http://localhost:3000/register/', {
             method: 'POST',
@@ -97,7 +97,7 @@ class Register extends React.Component {
                             <input className="b ph3 pv2 input-reset ba bw1 b--black bg-transparent grow pointer f5 dib"
                                 type="submit" 
                                 value="Register" 
-                                onClick={this.onSubmit} />
+                                onClick={this.onSubmitRegister} />
                         </div>
                     </div>
                 </main>

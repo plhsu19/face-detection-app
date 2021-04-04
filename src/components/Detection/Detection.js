@@ -6,7 +6,7 @@ function Detection({ box, imageUrl }) {
     return (
         // use in-line style css to add the style for "bounding-box"
         // in the JAX syntax, we actually pass a JS object as CSS style to the 
-        // JAX elements
+        // JSX elements
         <div className='center'>
             {/* set the top margin */}
             <div className='mt4 absolute'>
