@@ -9,7 +9,9 @@ class Signin extends React.Component {
         super(props);
         this.state = {
             signInEmail: '',
-            signInPassword: ''
+            signInPassword: '',
+            signInFail: false,
+            failMessage: ''
         }
     }
 
@@ -42,14 +44,20 @@ class Signin extends React.Component {
                 password: this.state.signInPassword
             })
         })
-        .then(response => response.json())
-        .then(
-            user => {
-                if (user.id) { // check if user.id exist. whether the server responded with a user profile?
-                    this.props.loadUser(user)
-                    this.props.onRouteChange('home');
-                }
-            })
+            .then(response => response.json())
+            .then(
+                user => {
+                    if (user.id) { // check if user.id exist. whether the server responded with a valid user profile?
+                        this.props.loadUser(user)
+                        this.props.onRouteChange('home');
+                    }
+                    else { // display the message for siginin fail in the signin box
+                        this.setState({
+                            signInFail: true,
+                            failMessage: user
+                        })
+                    }
+                })
     }
 
     render() {
@@ -80,13 +88,20 @@ class Signin extends React.Component {
                                 type="submit" value="Sign in" onClick={this.onSubmitSignIn} />
                         </div>
                         <div className="lh-copy mt3">
-                            <p onClick={ () => onRouteChange('register')} 
-                            className="f5 link dim black db pointer">Register</p>
+                            <p onClick={() => onRouteChange('register')}
+                                className="f5 link dim black db pointer">Register</p>
                         </div>
+                        {
+                            this.state.signInFail
+                                ? <div className="f5 red b">
+                                    {"Failed: " + this.state.failMessage}
+                                </div>
+                                : <div></div>
+                        }
                     </div>
                 </main>
             </article>
-        )
+        );
     }
 }
 

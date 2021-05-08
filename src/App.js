@@ -102,11 +102,10 @@ onPictureSubmit = () => {
   this.setState({
     imageUrl: this.state.input
   })
-  app.models.predict(
-    Clarifai.FACE_DETECT_MODEL,
-    this.state.input)
-    .then( // the response fetched from app.models.predict probably is already parsed into a JS object (.json())
-      (response) => {
+  app.models.predict( Clarifai.FACE_DETECT_MODEL, this.state.input)
+    .then( (response) => { // the response fetched from app.models.predict probably is already parsed into a JS object (.json())
+      
+        // if response is not empty, increase entries in user's profile
         if (response) {
           fetch('http://localhost:3000/image', {
             method: 'PUT',
