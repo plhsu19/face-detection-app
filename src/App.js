@@ -21,26 +21,29 @@ const app = new Clarifai.App({
   apiKey: 'dec2654d72a643e29103a7a33dd7eb4b'
 });
 
+// initial state when route change to the sign in page
+const initialState = {
+  input: '',
+  imageUrl: 'https://static.dw.com/image/17321990_303.jpg',
+  box: {},
+  // the route state keeps track of where we are on the page
+  // to control the status and display of the webapp.
+  route: 'signin',
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
+
 // smart component for the application
 class App extends Component {
 
   constructor() {
     super();
-    this.state = {
-      input: '',
-      imageUrl: '',
-      box: {},
-      // the route state keeps track of where we are on the page
-      // to control the status and display of the webapp.
-      route: 'signin',
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    }
+    this.state = initialState;
   }
 
   // calculate the detected object location from the API's response
@@ -79,32 +82,35 @@ class App extends Component {
     )
   }
 
-// use arrow function to make sure the method point back to the App object
-// argument: event => the event object that triggered by the user, i.e., changing the 
-// content of the input form (text)
-onInputChange = (event) => {
-  this.setState({
-    input: event.target.value
-  })
-}
+  // use arrow function to make sure the method point back to the App object
+  // argument: event => the event object that triggered by the user, i.e., changing the 
+  // content of the input form (text)
+  onInputChange = (event) => {
+    this.setState({
+      input: event.target.value
+    })
+  }
 
-// function for route(state) change: signin <-> main page
-onRouteChange = (nextRoute) => {
-  this.setState({
-    route: nextRoute
-  })
-}
+  // function for route(state) change: signin <-> home <-> register
+  onRouteChange = (nextRoute) => {
+    if (nextRoute === 'signin') this.setState(initialState);
+    else {
+      this.setState({
+        route: nextRoute
+      })
+    }
+  }
 
-// method for submit the image URL when 'submit button' is clicked
-onPictureSubmit = () => {
-  // setState() is an asynchronous process, which may not executed immediately
-  // use componentDidUpdate() to make sure the following processes fire after the setState is finished
-  this.setState({
-    imageUrl: this.state.input
-  })
-  app.models.predict( Clarifai.FACE_DETECT_MODEL, this.state.input)
-    .then( (response) => { // the response fetched from app.models.predict probably is already parsed into a JS object (.json())
-      
+  // method for submit the image URL when 'submit button' is clicked
+  onPictureSubmit = () => {
+    // setState() is an asynchronous process, which may not executed immediately
+    // use componentDidUpdate() to make sure the following processes fire after the setState is finished
+    this.setState({
+      imageUrl: this.state.input
+    })
+    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+      .then((response) => { // the response fetched from app.models.predict probably is already parsed into a JS object (.json())
+
         // if response is not empty, increase entries in user's profile
         if (response) {
           fetch('http://localhost:3000/image', {
@@ -119,44 +125,45 @@ onPictureSubmit = () => {
             .then(response => response.json())
             .then(count => {
               // Object.assign() returns the target object updated with source object
-              let user = Object.assign(this.state.user, {entries: count});
-              this.setState({user}) 
+              let user = Object.assign(this.state.user, { entries: count });
+              this.setState({ user })
             })
+            .catch(console.log) // error handling
         }
         this.setBoundingBox(this.calculateObjectLocation(response))
       })
-    .catch((err) => console.log(err))
-}
+      .catch((err) => console.log(err))
+  }
 
 
-render() {
-  const { route, box, imageUrl } = this.state;
-  return (
-    <div className="App">
-      <Particles params={particleParameter} className='particle' />
-      <Navigation onRouteChange={this.onRouteChange} route={route} />
-      {
-        route === 'home'
-          ? <div>
-            <Logo />
-            <Rank userName={this.state.user.name} userEntries={this.state.user.entries} />
-            <ImageLinkForm
-              onInputChange={this.onInputChange}
-              onPictureSubmit={this.onPictureSubmit}
-            />
-            <Detection box={box} imageUrl={imageUrl} />
-          </div>
-          : (route === 'signin'
-            ? <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
-            : <Register
-              loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange} />
-          )
-      }
-    </div>
-  );
+  render() {
+    const { route, box, imageUrl } = this.state;
+    return (
+      <div className="App">
+        <Particles params={particleParameter} className='particle' />
+        <Navigation onRouteChange={this.onRouteChange} route={route} />
+        {
+          route === 'home'
+            ? <div>
+              <Logo />
+              <Rank userName={this.state.user.name} userEntries={this.state.user.entries} />
+              <ImageLinkForm
+                onInputChange={this.onInputChange}
+                onPictureSubmit={this.onPictureSubmit}
+              />
+              <Detection box={box} imageUrl={imageUrl} />
+            </div>
+            : (route === 'signin'
+              ? <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
+              : <Register // route == 'register'
+                loadUser={this.loadUser}
+                onRouteChange={this.onRouteChange} />
+            )
+        }
+      </div>
+    );
 
-}
+  }
 }
 
 export default App;
