@@ -11,15 +11,9 @@ import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Detection from './components/Detection/Detection';
-import Clarifai from 'clarifai';
 
 // since we use create-react-app (with ES6 module system), 
 // we can use 'import' syntax here instead of commonJS way ,ie, 'require', of importing
-
-// initialize the client for image recognition API
-const app = new Clarifai.App({
-  apiKey: 'dec2654d72a643e29103a7a33dd7eb4b'
-});
 
 // initial state when route change to the sign in page
 const initialState = {
@@ -108,10 +102,20 @@ class App extends Component {
     this.setState({
       imageUrl: this.state.input
     })
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) => { // the response fetched from app.models.predict probably is already parsed into a JS object (.json())
 
-        // if response is not empty, increase entries in user's profile
+    // request to imageurl route to get access to the AI api (indirectly)
+    fetch('http://localhost:3000/imageurl', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+      .then(response => response.json())
+      .then((response) => {
+        // if response is not empty, increase entries in user's profile in FE
         if (response) {
           fetch('http://localhost:3000/image', {
             method: 'PUT',

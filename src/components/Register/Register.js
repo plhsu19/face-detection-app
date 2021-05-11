@@ -8,7 +8,8 @@ class Register extends React.Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            registerFail: false
         };
     }
 
@@ -53,10 +54,15 @@ class Register extends React.Component {
         .then(response => response.json())
         .then(
             user => {
-                if (user) {
+                if (user.id) {
                     // update the responded user profile as a temp profile into the frontend APP
                     this.props.loadUser(user);
                     this.props.onRouteChange('home');
+                }
+                else {
+                    this.setState({
+                        registerFail: true
+                    })
                 }
             })
     }
@@ -99,6 +105,13 @@ class Register extends React.Component {
                                 value="Register" 
                                 onClick={this.onSubmitRegister} />
                         </div>
+                        {
+                            this.state.registerFail
+                                ? <div className="f5 pv4 red b">
+                                    {"register failed"}
+                                </div>
+                                : <div></div>
+                        }
                     </div>
                 </main>
             </article>
