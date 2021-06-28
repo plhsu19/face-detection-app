@@ -104,7 +104,7 @@ class App extends Component {
     })
 
     // request to imageurl route to get access to the AI api (indirectly)
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://whispering-river-51042.herokuapp.com/imageurl', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ class App extends Component {
       .then((response) => {
         // if response is not empty, increase entries in user's profile in FE
         if (response) {
-          fetch('http://localhost:3000/image', {
+          fetch('https://whispering-river-51042.herokuapp.com/image', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
