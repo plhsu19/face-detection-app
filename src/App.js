@@ -19,7 +19,12 @@ import Detection from './components/Detection/Detection';
 const initialState = {
   input: '',
   imageUrl: 'https://static.dw.com/image/17321990_303.jpg',
-  box: {},
+  boxes: [{
+    bottomRow: 147.44779842000003, 
+    leftCol: 538.309215,
+    rightCol: 149.08994999999993,
+    topRow: 74.034168
+  }],
   // the route state keeps track of where we are on the page
   // to control the status and display of the webapp.
   route: 'signin',
@@ -31,7 +36,6 @@ const initialState = {
     joined: ''
   }
 }
-
 // smart component for the application
 class App extends Component {
 
@@ -43,22 +47,30 @@ class App extends Component {
   // calculate the detected object location from the API's response
   calculateObjectLocation = (data) => {
     // bounding contains 4 numbers representing the percentage of the image
-    const objectLocation = data.outputs[0].data.regions[0].region_info.bounding_box;
+    // const objectLocation = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const objectRegions = data.outputs[0].data.regions;
+    const boxArray = [];
 
     // image DOM manupulation
     const image = document.getElementById('inputImage');
     const width = Number(image.width)
     const height = Number(image.height)
-    return {
-      leftCol: width * objectLocation.left_col,
-      topRow: height * objectLocation.top_row,
-      rightCol: width - width * objectLocation.right_col,
-      bottomRow: height - height * objectLocation.bottom_row,
+
+    // extract and transfer bounding box location from each detected object
+    for (const object of objectRegions) {
+      const box = {
+        leftCol: width * object.region_info.bounding_box.left_col,
+        topRow: height * object.region_info.bounding_box.top_row,
+        rightCol: width - width * object.region_info.bounding_box.right_col,
+        bottomRow: height - height * object.region_info.bounding_box.bottom_row,          
+      }
+      boxArray.push(box);
     }
+    return boxArray;
   }
 
-  setBoundingBox = (box) => {
-    this.setState({ box: box });
+  setBoundingBox = (boxes) => {
+    this.setState({ boxes: boxes });
   }
 
   // load the user profile sent by server after register success into the App
@@ -104,7 +116,7 @@ class App extends Component {
     })
 
     // request to imageurl route to get access to the AI api (indirectly)
-    fetch('https://whispering-river-51042.herokuapp.com/imageurl', {
+    fetch('https://arcane-bastion-78521.herokuapp.com/imageurl', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -117,7 +129,7 @@ class App extends Component {
       .then((response) => {
         // if response is not empty, increase entries in user's profile in FE
         if (response) {
-          fetch('https://whispering-river-51042.herokuapp.com/image', {
+          fetch('https://arcane-bastion-78521.herokuapp.com/image', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -141,7 +153,7 @@ class App extends Component {
 
 
   render() {
-    const { route, box, imageUrl } = this.state;
+    const { route, boxes, imageUrl } = this.state;
     return (
       <div className="App">
         <Particles params={particleParameter} className='particle' />
@@ -155,7 +167,7 @@ class App extends Component {
                 onInputChange={this.onInputChange}
                 onPictureSubmit={this.onPictureSubmit}
               />
-              <Detection box={box} imageUrl={imageUrl} />
+              <Detection boxes={boxes} imageUrl={imageUrl} />
             </div>
             : (route === 'signin'
               ? <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />

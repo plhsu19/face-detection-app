@@ -40,7 +40,7 @@ class Register extends React.Component {
     // TODO: dispaly "signin fail" if receive "fail" from server
     onSubmitRegister = (event) => {
         // fetch return a promise resolved by the response (Response object)
-        fetch('https://whispering-river-51042.herokuapp.com/register/', {
+        fetch('https://arcane-bastion-78521.herokuapp.com/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
