@@ -9,7 +9,7 @@ function Rank(props) {
         // JAX elements
         <div>
             <div className='f2'>
-                {`Hi ${userName}, you have detected ${userEntries} photo(s) so far`}
+                {`Hi ${userName}, you have detected ${userEntries} photo so far`}
             </div>
         </div>
     )
