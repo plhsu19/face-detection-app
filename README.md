@@ -16,7 +16,7 @@ Clone the respository and run the following commands according to your needs:
 Installs the app package, and any packages that it depends on.\
 If vulnerabilities appear, please refer to React's website to find the information about how to fix the vulnerabilities.
 
-### `npm start`
+### `npm start:dev`
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
