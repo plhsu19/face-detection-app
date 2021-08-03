@@ -4,7 +4,7 @@
 This is a face detection web application using MVC-like architecture with user registration and authetication features.\
 Front-End implemented with HTML, CSS (Tachyons), JavaScript, and React.\
 Back-End implemented with Node.js, Exress.js, PostgreSQL, and Clarifai's AI API.\
-Deployed on Heroku.\
+Deployed on Heroku.
 
 `This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).`
 
