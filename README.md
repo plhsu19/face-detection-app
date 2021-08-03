@@ -1,11 +1,10 @@
 # Web-App: Face Detection
-* This app is still in construction (07 Nov 2020)
-* The app is the final project for udemy coures: Web Developer
+* The app is the final project for the web development course given by ZTM Academy.
 
-This is a face detection web application using MVP architecture with user registration and login/logout features.\
+This is a face detection web application using MVC-like architecture with user registration and authetication features.\
 Front-End implemented with HTML, CSS (Tachyons), JavaScript, and React.\
 Back-End implemented with Node.js, Exress.js, PostgreSQL, and Clarifai's AI API.\
-Deployed on *TBD.\
+Deployed on Heroku.\
 
 `This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).`
 
